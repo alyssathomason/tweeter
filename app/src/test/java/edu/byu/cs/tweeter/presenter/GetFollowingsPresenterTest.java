@@ -7,9 +7,9 @@ import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import edu.byu.cs.tweeter.client.presenter.GetFollowingsPresenter;
 import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.model.service.GetFollowingsService;
 import edu.byu.cs.tweeter.model.service.request.GetFollowingsRequest;

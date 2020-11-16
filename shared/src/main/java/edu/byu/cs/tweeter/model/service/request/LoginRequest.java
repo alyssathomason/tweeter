@@ -5,18 +5,13 @@ package edu.byu.cs.tweeter.model.service.request;
  */
 public class LoginRequest {
 
-<<<<<<< Updated upstream:shared/src/main/java/edu/byu/cs/tweeter/model/service/request/LoginRequest.java
-    private String username;
+    private String alias;
     private String password;
 
     /**
      * Allows construction of the object from Json. Private so it won't be called in normal code.
      */
     private LoginRequest() {}
-=======
-    private final String alias;
-    private final String password;
->>>>>>> Stashed changes:app/src/main/java/edu/byu/cs/tweeter/model/service/request/LoginRequest.java
 
     /**
      * Creates an instance.
@@ -44,7 +39,7 @@ public class LoginRequest {
      * @param username the username.
      */
     public void setUsername(String username) {
-        this.username = username;
+        this.alias = username;
     }
     /**
      * Returns the password of the user to be logged in by this request.

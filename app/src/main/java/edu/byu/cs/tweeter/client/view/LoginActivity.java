@@ -15,28 +15,18 @@ import com.google.android.material.tabs.TabLayout;
 
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
-import edu.byu.cs.tweeter.model.service.request.LoginRequest;
-import edu.byu.cs.tweeter.model.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.model.service.response.LoginResponse;
-<<<<<<< Updated upstream:app/src/main/java/edu/byu/cs/tweeter/client/view/LoginActivity.java
+import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.client.presenter.LoginPresenter;
 import edu.byu.cs.tweeter.client.view.asyncTasks.LoginTask;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
-=======
-import edu.byu.cs.tweeter.model.service.response.RegisterResponse;
-import edu.byu.cs.tweeter.presenter.LoginPresenter;
-import edu.byu.cs.tweeter.presenter.RegisterPresenter;
-import edu.byu.cs.tweeter.view.asyncTasks.LoginTask;
-import edu.byu.cs.tweeter.view.asyncTasks.RegisterTask;
-import edu.byu.cs.tweeter.view.main.MainActivity;
-import edu.byu.cs.tweeter.view.main.TabsAdapter;
->>>>>>> Stashed changes:app/src/main/java/edu/byu/cs/tweeter/view/LoginActivity.java
+import edu.byu.cs.tweeter.client.view.main.TabsAdapter;
 
 /**
  * Contains the minimum UI required to allow the user to login with a hard-coded user. Most or all
  * of this should be replaced when the back-end is implemented.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginPresenter.View, LoginTask.Observer {
 
     private static final String LOG_TAG = "LoginActivity";
 
@@ -68,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-<<<<<<< Updated upstream:app/src/main/java/edu/byu/cs/tweeter/client/view/LoginActivity.java
 
     /**
      * The callback method that gets invoked for a successful login. Displays the MainActivity.
@@ -82,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra(MainActivity.CURRENT_USER_KEY, loginResponse.getUser());
         intent.putExtra(MainActivity.AUTH_TOKEN_KEY, loginResponse.getAuthToken());
 
-        loginInToast.cancel();
+//        loginInToast.cancel();
         startActivity(intent);
     }
 
@@ -121,6 +110,4 @@ public class LoginActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Failed to login because of exception: " + exception.getMessage(), Toast.LENGTH_LONG).show();
     }
-=======
->>>>>>> Stashed changes:app/src/main/java/edu/byu/cs/tweeter/view/LoginActivity.java
 }

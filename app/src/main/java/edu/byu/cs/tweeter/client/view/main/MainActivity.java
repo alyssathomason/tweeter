@@ -23,16 +23,13 @@ import java.util.List;
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
-<<<<<<< Updated upstream:app/src/main/java/edu/byu/cs/tweeter/client/view/main/MainActivity.java
 import edu.byu.cs.tweeter.client.view.util.ImageUtils;
-=======
 import edu.byu.cs.tweeter.model.service.request.GetFollowingsRequest;
 import edu.byu.cs.tweeter.model.service.response.GetFollowingsResponse;
-import edu.byu.cs.tweeter.presenter.GetFollowingsPresenter;
-import edu.byu.cs.tweeter.view.LoginActivity;
-import edu.byu.cs.tweeter.view.asyncTasks.GetFollowingsTask;
-import edu.byu.cs.tweeter.view.util.ImageUtils;
->>>>>>> Stashed changes:app/src/main/java/edu/byu/cs/tweeter/view/main/MainActivity.java
+import edu.byu.cs.tweeter.client.presenter.GetFollowingsPresenter;
+import edu.byu.cs.tweeter.client.view.LoginActivity;
+import edu.byu.cs.tweeter.client.view.asyncTasks.GetFollowingsTask;
+import edu.byu.cs.tweeter.client.view.util.ImageUtils;
 
 /**
  * The main activity for the application. Contains tabs for feed, story, following, and followers.

@@ -15,8 +15,6 @@ import edu.byu.cs.tweeter.model.service.request.FeedRequest;
 import edu.byu.cs.tweeter.model.service.request.FindUserRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowRequest;
 import edu.byu.cs.tweeter.model.service.request.FollowersRequest;
-import edu.byu.cs.tweeter.model.service.request.FollowingRequest;
-import edu.byu.cs.tweeter.model.service.request.GetFollowingsRequest;
 import edu.byu.cs.tweeter.model.service.request.LogoutRequest;
 import edu.byu.cs.tweeter.model.service.request.PostStatusRequest;
 import edu.byu.cs.tweeter.model.service.request.RegisterRequest;
@@ -26,8 +24,6 @@ import edu.byu.cs.tweeter.model.service.response.FeedResponse;
 import edu.byu.cs.tweeter.model.service.response.FindUserResponse;
 import edu.byu.cs.tweeter.model.service.response.FollowResponse;
 import edu.byu.cs.tweeter.model.service.response.FollowersResponse;
-import edu.byu.cs.tweeter.model.service.response.FollowingResponse;
-import edu.byu.cs.tweeter.model.service.response.GetFollowingsResponse;
 import edu.byu.cs.tweeter.model.service.response.LogoutResponse;
 import edu.byu.cs.tweeter.model.service.response.PostStatusResponse;
 import edu.byu.cs.tweeter.model.service.response.RegisterResponse;
@@ -35,10 +31,10 @@ import edu.byu.cs.tweeter.model.service.response.StoryResponse;
 import edu.byu.cs.tweeter.model.service.response.UnfollowResponse;
 
 /**
- * A DAO for accessing 'following' data from the database.
+ * A DAO for accessing 'followers' data from the database.
  */
-public class FollowingDAO {
-    // This is the hard coded followee data returned by the 'getFollowees()' method
+public class FollowersDAO {
+    // This is the hard coded follower data returned by the 'getFollowers()' method
     private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
     private static final String FEMALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
     private static final String SAA_AIM = "Our aim is to make the BYU experience well-rounded by connecting with and creating opportunities between students and alumni https://studentalumni.byu.edu";
@@ -90,153 +86,55 @@ public class FollowingDAO {
     private ArrayList<Status> newStatuses = new ArrayList<>();
 
     /**
-     * Gets the count of users from the database that the user specified is following. The
+     * Gets the count of users from the database that the user specified is followers. The
      * current implementation uses generated data and doesn't actually access a database.
      *
-     * @param follower the User whose count of how many following is desired.
+     * @param follower the User whose count of how many followers is desired.
      * @return said count.
      */
-    public Integer getFolloweeCount(User follower) {
+    public Integer getFollowerCount(User follower) {
         // TODO: uses the dummy data.  Replace with a real implementation.
         assert follower != null;
-        return getDummyFollowees().size();
+        return getDummyFollowers().size();
     }
 
     /**
-     * Gets the users from the database that the user specified in the request is following. Uses
-     * information in the request object to limit the number of followees returned and to return the
-     * next set of followees after any that were returned in a previous request. The current
-     * implementation returns generated data and doesn't actually access a database.
-
-    public LoginResponse login(LoginRequest request) {
-        //FIND USER IN SERVER
-        User user = getUser(new FindUserRequest(request.getAlias())).getUser();
-
-        return new LoginResponse(user, new AuthToken());
-    }
-
-    /**
-     * Performs a register and if successful, returns the logged in user and an auth token. The current
-     * implementation is hard-coded to return a dummy user and doesn't actually make a network
-     * request.
-     *
-     * @param request contains all information needed to perform a register.
-     * @return the register response.
-     */
-    public RegisterResponse register(RegisterRequest request) {
-        //FIND USER IN SERVER
-        User user = new User(request.getFirstName(), request.getLastName(), request.getAlias(), MALE_IMAGE_URL);
-
-        return new RegisterResponse(user, new AuthToken());
-    }
-
-    /**
-     * Performs a login and if successful, returns the logged in user and an auth token. The current
-     * implementation is hard-coded to return a dummy user and doesn't actually make a network
-     * request.
-     *
-     * @param request contains all information needed to perform a login.
-     * @return the login response.
-     */
-    public LogoutResponse logout(LogoutRequest request) {
-        User userToLogout = getUser(new FindUserRequest(request.getAlias())).getUser();
-
-        return new LogoutResponse(userToLogout);
-    }
-
-    /**
-     * Performs a follow and if successful, returns the follow object. The current
-     * implementation is hard-coded to return a dummy user and doesn't actually make a network
-     * request.
-     *
-     * @param request contains all information needed to perform a follow.
-     * @return the follow response.
-     */
-    public FollowResponse follow(FollowRequest request) {
-        Follow follow = new Follow(request.getFollowee(), request.getFollower());
-        return new FollowResponse(follow);
-    }
-
-    /**
-     * Performs an unfollow. The current
-     * implementation is hard-coded to return a dummy user and doesn't actually make a network
-     * request.
-     *
-     * @param request contains all information needed to perform a follow.
-     * @return the follow response.
-     */
-    public UnfollowResponse unfollow(UnfollowRequest request) {
-        if(BuildConfig.DEBUG) {
-
-            if(request.getFollowee() == null || request.getFollower() == null) {
-                throw new AssertionError();
-            }
-        }
-        return new UnfollowResponse();
-    }
-
-    /**
-     * Returns the users that the user specified in the request is following and that are following
-     * the user. The current implementation
+     * Returns the users that the user specified in the request is followers. Uses information in
+     * the request object to limit the number of followers returned and to return the next set of
+     * followers after any that were returned in a previous request. The current implementation
      * returns generated data and doesn't actually make a network request.
      *
-     * @param request contains information about the user whose followees & followers are to be
-     *                returned and any other information required to satisfy the request.
-     * @return the followings response.
-     */
-    public GetFollowingsResponse getFollowings(GetFollowingsRequest request) {
-
-        // Used in place of assert statements because Android does not support them
-        if(BuildConfig.DEBUG) {
-
-            if(request.getUser() == null) {
-                throw new AssertionError();
-            }
-        }
-
-        List<User> allFollowees = getDummyFollowees();
-        List<User> allFollowers = getDummyFollowees();
-
-        return new GetFollowingsResponse(allFollowees, allFollowers);
-    }
-
-    /**
-     * Returns the users that the user specified in the request is following. Uses information in
-     * the request object to limit the number of followees returned and to return the next set of
-     * followees after any that were returned in a previous request. The current implementation
-     * returns generated data and doesn't actually make a network request.
-     *
-     * @param request contains information about the user whose followees are to be returned and any
+     * @param request contains information about the user whose followers are to be returned and any
      *                other information required to satisfy the request.
-     * @return the followees.
+     * @return the followers.
      */
-    public FollowingResponse getFollowees(FollowingRequest request) {
+    public FollowersResponse getFollowers(FollowersRequest request) {
         // TODO: Generates dummy data. Replace with a real implementation.
         assert request.getLimit() > 0;
         assert request.getFollower() != null;
 
-        List<User> allFollowees = getDummyFollowees();
-        List<User> responseFollowees = new ArrayList<>(request.getLimit());
+        List<User> allFollowers = getDummyFollowers();
+        List<User> responseFollowers = new ArrayList<>(request.getLimit());
 
         boolean hasMorePages = false;
 
         if(request.getLimit() > 0) {
-            if (allFollowees != null) {
-                int followeesIndex = getFolloweesStartingIndex(request.getLastFollowee(), allFollowees);
+            if (allFollowers != null) {
+                int followersIndex = getFollowersStartingIndex(request.getLastFollower(), allFollowers);
 
-                for(int limitCounter = 0; followeesIndex < allFollowees.size() && limitCounter < request.getLimit(); followeesIndex++, limitCounter++) {
-                    responseFollowees.add(allFollowees.get(followeesIndex));
+                for(int limitCounter = 0; followersIndex < allFollowers.size() && limitCounter < request.getLimit(); followersIndex++, limitCounter++) {
+                    responseFollowers.add(allFollowers.get(followersIndex));
                 }
 
-                hasMorePages = followeesIndex < allFollowees.size();
+                hasMorePages = followersIndex < allFollowers.size();
             }
         }
 
-        return new FollowingResponse(responseFollowees, hasMorePages);
+        return new FollowersResponse(responseFollowers, hasMorePages);
     }
 
     /**
-     * Returns the users that are following the user specified. Uses information in
+     * Returns the users that are followers the user specified. Uses information in
      * the request object to limit the number of followers returned and to return the next set of
      * followers after any that were returned in a previous request. The current implementation
      * returns generated data and doesn't actually make a network request.
@@ -258,7 +156,7 @@ public class FollowingDAO {
             }
         }
 
-        List<User> allFollowers = getDummyFollowees();
+        List<User> allFollowers = getDummyFollowers();
         List<User> responseFollowers = new ArrayList<>(request.getLimit());
 
         boolean hasMorePages = false;
@@ -417,36 +315,6 @@ public class FollowingDAO {
     }
 
     /**
-     * Determines the index for the first followee in the specified 'allFollowees' list that should
-     * be returned in the current request. This will be the index of the next followee after the
-     * specified 'lastFollowee'.
-     *
-     * @param lastFollowee the last followee that was returned in the previous request or null if
-     *                     there was no previous request.
-     * @param allFollowees the generated list of followees from which we are returning paged results.
-     * @return the index of the first followee to be returned.
-     */
-    private int getFolloweesStartingIndex(User lastFollowee, List<User> allFollowees) {
-
-        int followeesIndex = 0;
-
-        if(lastFollowee != null) {
-            // This is a paged request for something after the first page. Find the first item
-            // we should return
-            for (int i = 0; i < allFollowees.size(); i++) {
-                if(lastFollowee.equals(allFollowees.get(i))) {
-                    // We found the index of the last item returned last time. Increment to get
-                    // to the first one we should return
-                    followeesIndex = i + 1;
-                    break;
-                }
-            }
-        }
-
-        return followeesIndex;
-    }
-
-    /**
      * Determines the index for the first follower in the specified 'allFollowers' list that should
      * be returned in the current request. This will be the index of the next follower after the
      * specified 'lastFollower'.
@@ -468,6 +336,7 @@ public class FollowingDAO {
                     // We found the index of the last item returned last time. Increment to get
                     // to the first one we should return
                     followersIndex = i + 1;
+                    break;
                 }
             }
         }
@@ -505,90 +374,14 @@ public class FollowingDAO {
     }
 
     /**
-     * Determines the index for the first status in the specified story list that should
-     * be returned in the current request. This will be the index of the next status after the
-     * specified 'lastStatus'.
+     * Returns the list of dummy follower data. This is written as a separate method to allow
+     * mocking of the followers.
      *
-     * @param lastStatus the last status that was returned in the previous request or null if
-     *                     there was no previous request.
-     * @param allStatuses the generated list of statuses from which we are returning paged results.
-     * @return the index of the first status to be returned.
+     * @return the followers.
      */
-    private int getStoryStartingIndex(Status lastStatus, ArrayList<Status> allStatuses) {
-
-        int statusesIndex = 0;
-
-        if(lastStatus != null) {
-            // This is a paged request for something after the first page. Find the first item
-            // we should return
-            for (int i = 0; i < allStatuses.size(); i++) {
-                if(lastStatus.equals(allStatuses.get(i))) {
-                    // We found the index of the last item returned last time. Increment to get
-                    // to the first one we should return
-                    statusesIndex = i + 1;
-                }
-            }
-        }
-
-        return statusesIndex;
-    }
-
-    /**
-     * Returns the list of dummy followee data. This is written as a separate method to allow
-     * mocking of the followees.
-     *
-     * @return the followees.
-     */
-    List<User> getDummyFollowees() {
+    List<User> getDummyFollowers() {
         return Arrays.asList(user1, user2, user3, user4, user5, user6, user7,
                 user8, user9, user10, user11, user12, user13, user14, user15, user16, user17, user18,
                 user19, user20);
-    }
-
-    /**
-     * Returns the list of dummy status data. This is written as a separate method to allow
-     * mocking of the statuses.
-     *
-     * @return the generator.
-     */
-    ArrayList<Status> getDummyStatuses() {
-        ArrayList<Status> statuses = new ArrayList<>();
-        statuses.addAll(newStatuses);
-        statuses.add(status1);
-        statuses.add(status2);
-        statuses.add(status3);
-        statuses.add(status4);
-        statuses.add(status5);
-        statuses.add(status6);
-        return statuses;
-    }
-
-    /**
-     * Returns the list of dummy status data. This is written as a separate method to allow
-     * mocking of the statuses.
-     *
-     * @return the generator.
-     */
-    ArrayList<Status> getDummyStoryStatuses(User user) {
-        final Status statusSA1 = new Status(STUDENT_ALUMNI_MESSAGES[(int)(Math.random() * 7)], user, "September 10, 2019 7pm");
-        final Status statusSA2 = new Status(STUDENT_ALUMNI_MESSAGES[(int)(Math.random() * 7)], user, "December 9, 2019 7pm");
-        final Status statusSA3 = new Status(STUDENT_ALUMNI_MESSAGES[(int)(Math.random() * 7)], user, "September 8, 2019 7pm");
-        final Status statusSA4 = new Status(STUDENT_ALUMNI_MESSAGES[(int)(Math.random() * 7)], user, "September 7, 2018 7pm");
-        final Status statusSA5 = new Status(STUDENT_ALUMNI_MESSAGES[(int)(Math.random() * 7)], user, "September 6, 2017 7pm");
-        final Status statusSA6 = new Status(STUDENT_ALUMNI_MESSAGES[(int)(Math.random() * 7)], user, "January 20, 2016 10am");
-
-        ArrayList<Status> statuses = new ArrayList<>();
-
-        if (newStatuses.size() > 0 && user.equals(newStatuses.get(0).poster)) {
-            statuses.addAll(newStatuses);
-        }
-
-        statuses.add(statusSA1);
-        statuses.add(statusSA2);
-        statuses.add(statusSA3);
-        statuses.add(statusSA4);
-        statuses.add(statusSA5);
-        statuses.add(statusSA6);
-        return statuses;
     }
 }

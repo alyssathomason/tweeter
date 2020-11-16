@@ -13,13 +13,9 @@ import edu.byu.cs.tweeter.model.service.FollowingService;
 /**
  * Contains the business logic for getting the users a user is following.
  */
-<<<<<<< Updated upstream:app/src/main/java/edu/byu/cs/tweeter/client/model/service/FollowingServiceProxy.java
 public class FollowingServiceProxy implements FollowingService {
 
     static final String URL_PATH = "/getfollowing";
-=======
-    public class FollowingService {
->>>>>>> Stashed changes:app/src/main/java/edu/byu/cs/tweeter/model/service/FollowingService.java
 
     /**
      * Returns the users that the user specified in the request is following. Uses information in
