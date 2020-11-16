@@ -1,61 +1,74 @@
 package edu.byu.cs.tweeter.client.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.material.tabs.TabLayout;
 
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.LoginRequest;
+import edu.byu.cs.tweeter.model.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.model.service.response.LoginResponse;
+<<<<<<< Updated upstream:app/src/main/java/edu/byu/cs/tweeter/client/view/LoginActivity.java
 import edu.byu.cs.tweeter.client.presenter.LoginPresenter;
 import edu.byu.cs.tweeter.client.view.asyncTasks.LoginTask;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
+=======
+import edu.byu.cs.tweeter.model.service.response.RegisterResponse;
+import edu.byu.cs.tweeter.presenter.LoginPresenter;
+import edu.byu.cs.tweeter.presenter.RegisterPresenter;
+import edu.byu.cs.tweeter.view.asyncTasks.LoginTask;
+import edu.byu.cs.tweeter.view.asyncTasks.RegisterTask;
+import edu.byu.cs.tweeter.view.main.MainActivity;
+import edu.byu.cs.tweeter.view.main.TabsAdapter;
+>>>>>>> Stashed changes:app/src/main/java/edu/byu/cs/tweeter/view/LoginActivity.java
 
 /**
  * Contains the minimum UI required to allow the user to login with a hard-coded user. Most or all
  * of this should be replaced when the back-end is implemented.
  */
-public class LoginActivity extends AppCompatActivity implements LoginPresenter.View, LoginTask.Observer {
+public class LoginActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "LoginActivity";
-
-    private LoginPresenter presenter;
-    private Toast loginInToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        presenter = new LoginPresenter(this);
-
-        Button loginButton = findViewById(R.id.LoginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-
-            /**
-             * Makes a login request. The user is hard-coded, so it doesn't matter what data we put
-             * in the LoginRequest object.
-             *
-             * @param view the view object that was clicked.
-             */
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Sign In"));
+        tabLayout.addTab(tabLayout.newTab().setText("Register"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        final ViewPager viewPager =(ViewPager)findViewById(R.id.view_pager);
+        TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(tabsAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
-                loginInToast = Toast.makeText(LoginActivity.this, "Logging In", Toast.LENGTH_LONG);
-                loginInToast.show();
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-                // It doesn't matter what values we put here. We will be logged in with a hard-coded dummy user.
-                LoginRequest loginRequest = new LoginRequest("dummyUserName", "dummyPassword");
-                LoginTask loginTask = new LoginTask(presenter, LoginActivity.this);
-                loginTask.execute(loginRequest);
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
     }
+<<<<<<< Updated upstream:app/src/main/java/edu/byu/cs/tweeter/client/view/LoginActivity.java
 
     /**
      * The callback method that gets invoked for a successful login. Displays the MainActivity.
@@ -108,4 +121,6 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenter.V
 
         Toast.makeText(this, "Failed to login because of exception: " + exception.getMessage(), Toast.LENGTH_LONG).show();
     }
+=======
+>>>>>>> Stashed changes:app/src/main/java/edu/byu/cs/tweeter/view/LoginActivity.java
 }

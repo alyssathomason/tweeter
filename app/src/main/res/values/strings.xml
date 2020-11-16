@@ -14,8 +14,25 @@
     <string name="followersTabTitle">Followers</string>
 
     <string name="sampleAlias">"@UserAlias"</string>
-    <string name="sampleUserName">The User</string>
+    <string name="sampleUserName">\@Username</string>
     <string name="title_activity_login">Sign in</string>
     <string name="followeeCount">Following: %d</string>
     <string name="followerCount">Followers: %d</string>
+    <string name="username_prompt">Username:</string>
+    <string name="password_prompt">Password:</string>
+    <string name="sample_password">Password</string>
+    <string name="register_prompt">Register</string>
+    <string name="first_name_prompt">First Name:</string>
+    <string name="last_name_prompt">Last Name:</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="profile_pic_prompt">Insert a profile picture</string>
+    <string name="full_name_hint">Full Name</string>
+    <string name="dividing_line">|</string>
+    <string name="example_date_format">October 4 12:00 AM</string>
+    <string name="profile_pic_description">The profile picture of the user who posted the status</string>
+    <string name="follow_prompt">FOLLOW</string>
+    <string name="post_prompt">post</string>
+    <string name="status_message_prompt">Message:</string>
+    <string name="post_status_title">Post Status</string>
 </resources>

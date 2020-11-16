@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.client.view.main.following;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,10 +26,21 @@ import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.model.service.request.FollowingRequest;
+import edu.byu.cs.tweeter.model.service.request.FindUserRequest;
 import edu.byu.cs.tweeter.model.service.response.FollowingResponse;
+<<<<<<< Updated upstream:app/src/main/java/edu/byu/cs/tweeter/client/view/main/following/FollowingFragment.java
 import edu.byu.cs.tweeter.client.presenter.FollowingPresenter;
 import edu.byu.cs.tweeter.client.view.asyncTasks.GetFollowingTask;
 import edu.byu.cs.tweeter.client.view.util.ImageUtils;
+=======
+import edu.byu.cs.tweeter.model.service.response.FindUserResponse;
+import edu.byu.cs.tweeter.presenter.FollowingPresenter;
+import edu.byu.cs.tweeter.presenter.FindUserPresenter;
+import edu.byu.cs.tweeter.view.asyncTasks.FindUserTask;
+import edu.byu.cs.tweeter.view.asyncTasks.GetFollowingTask;
+import edu.byu.cs.tweeter.view.main.UserProfileActivity;
+import edu.byu.cs.tweeter.view.util.ImageUtils;
+>>>>>>> Stashed changes:app/src/main/java/edu/byu/cs/tweeter/view/main/following/FollowingFragment.java
 
 /**
  * The fragment that displays on the 'Following' tab.
@@ -47,6 +59,7 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
     private User user;
     private AuthToken authToken;
     private FollowingPresenter presenter;
+
 
     private FollowingRecyclerViewAdapter followingRecyclerViewAdapter;
 
@@ -96,12 +109,15 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
     /**
      * The ViewHolder for the RecyclerView that displays the Following data.
      */
-    private class FollowingHolder extends RecyclerView.ViewHolder {
+    private class FollowingHolder extends RecyclerView.ViewHolder implements FindUserPresenter.View, FindUserTask.Observer {
 
         private final ImageView userImage;
         private final TextView userAlias;
         private final TextView userName;
 
+        private FindUserPresenter userPresenter;
+
+        private User followee;
         /**
          * Creates an instance and sets an OnClickListener for the user's row.
          *
@@ -110,6 +126,7 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
         FollowingHolder(@NonNull View itemView, int viewType) {
             super(itemView);
 
+<<<<<<< Updated upstream:app/src/main/java/edu/byu/cs/tweeter/client/view/main/following/FollowingFragment.java
             if(viewType == ITEM_VIEW) {
                 userImage = itemView.findViewById(R.id.userImage);
                 userAlias = itemView.findViewById(R.id.userAlias);
@@ -126,6 +143,25 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
                 userAlias = null;
                 userName = null;
             }
+=======
+            userPresenter = new FindUserPresenter(this);
+
+            userImage = itemView.findViewById(R.id.userImage);
+            userAlias = itemView.findViewById(R.id.userAlias);
+            userName = itemView.findViewById(R.id.username_prompt);
+
+            FindUserTask findUserTask = new FindUserTask(userPresenter, this);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FindUserRequest requestUser = new FindUserRequest(userAlias.getText().toString());
+                    findUserTask.execute(requestUser);
+                    Toast.makeText(getContext(), "You selected '" + userName.getText() + "'.", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+>>>>>>> Stashed changes:app/src/main/java/edu/byu/cs/tweeter/view/main/following/FollowingFragment.java
         }
 
         /**
@@ -137,6 +173,33 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
             userImage.setImageDrawable(ImageUtils.drawableFromByteArray(user.getImageBytes()));
             userAlias.setText(user.getAlias());
             userName.setText(user.getName());
+        }
+
+        /**
+         * A callback indicating more following data has been received. Loads the new followings
+         * and removes the loading footer.
+         *
+         * @param userResponse the asynchronous response to the request to load more items.
+         */
+        @Override
+        public void userRetrieved(FindUserResponse userResponse) {
+            followee = userResponse.getUser();
+
+            Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+            intent.putExtra("LOGGED_IN_USER", user);
+            intent.putExtra("USER", followee);
+            startActivity(intent);
+        }
+
+        /**
+         * A callback indicating that an exception was thrown by the presenter.
+         *
+         * @param exception the exception.
+         */
+        @Override
+        public void handleUserException(Exception exception) {
+            Log.e("", exception.getMessage(), exception);
+            Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

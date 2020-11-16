@@ -12,8 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+<<<<<<< Updated upstream
             android:name=".client.view.LoginActivity"
             android:label="@string/title_activity_login"
+=======
+            android:name=".view.LoginActivity"
+            android:label="@string/app_name"
+>>>>>>> Stashed changes
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +26,21 @@
             </intent-filter>
         </activity>
         <activity
+<<<<<<< Updated upstream
             android:name=".client.view.main.MainActivity"
             android:label="@string/title_activity_main">
+=======
+            android:name=".view.main.MainActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".view.main.UserProfileActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".view.main.PostStatusActivity"
+            android:label="@string/app_name">
+>>>>>>> Stashed changes
         </activity>
     </application>
 

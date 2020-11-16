@@ -28,6 +28,9 @@ public class User implements Comparable<User>, Serializable {
         this.lastName = lastName;
         this.alias = alias;
         this.imageUrl = imageURL;
+        if (imageURL != null) {
+            setImageBytes(imageUrl.getBytes());
+        }
     }
 
     public String getFirstName() {
@@ -62,6 +65,7 @@ public class User implements Comparable<User>, Serializable {
         return imageUrl;
     }
 
+<<<<<<< Updated upstream:shared/src/main/java/edu/byu/cs/tweeter/model/domain/User.java
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
@@ -69,6 +73,9 @@ public class User implements Comparable<User>, Serializable {
     public byte [] getImageBytes() {
         return imageBytes;
     }
+=======
+    public byte [] getImageBytes() { return imageBytes; }
+>>>>>>> Stashed changes:app/src/main/java/edu/byu/cs/tweeter/model/domain/User.java
 
     public void setImageBytes(byte[] imageBytes) {
         this.imageBytes = imageBytes;
